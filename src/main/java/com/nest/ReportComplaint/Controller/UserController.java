@@ -15,6 +15,8 @@ public class UserController {
     @Autowired
     private UserDao udao;
 
+    @CrossOrigin(origins = "*")
+
     @GetMapping("/")
     public String Homepage(){
         return "welcome to my website";
@@ -48,6 +50,7 @@ public class UserController {
         }
         else{
             map.put("status","success");
+            map.put("userId",String.valueOf(result.get(0).getId()));
 
         }
         return map;
