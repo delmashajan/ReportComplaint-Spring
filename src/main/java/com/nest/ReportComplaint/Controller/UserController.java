@@ -23,16 +23,34 @@ public class UserController {
     @CrossOrigin(origins = "*")
     @PostMapping(path="/userReg",consumes = "application/json",produces = "application/json")
     public HashMap<String,String> UserRegistration(@RequestBody UserModel um){
-        System.out.println(um.getName().toString());
-        udao.save(um);
+
         HashMap<String,String> map=new HashMap<>();
-        map.put("status","success");
+        List<UserModel> result= (List<UserModel>) udao.FindUser(um.getUsername());
+        if(result.size()!=0){
+            map.put("status","failed");
+
+        }else{
+            udao.save(um);
+            map.put("status","success");
+        }
         return map;
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/view")
-    public List<UserModel> viewAll(){
-        return (List<UserModel>) udao.findAll();
+
+    @PostMapping(path = "/userlogin",consumes = "application/json",produces = "application/json")
+    public HashMap<String,String> UserLogin(@RequestBody UserModel um){
+
+       List<UserModel> result= (List<UserModel>) udao.UserLogin(um.getUsername(),um.getPassword());
+        HashMap<String,String> map=new HashMap<>();
+        if(result.size()==0){
+            map.put("status","failed");
+        }
+        else{
+            map.put("status","success");
+
+        }
+        return map;
+
     }
 }
