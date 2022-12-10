@@ -51,9 +51,13 @@ public class UserController {
         else{
             map.put("status","success");
             map.put("userId",String.valueOf(result.get(0).getId()));
-
         }
         return map;
-
     }
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/profileview",consumes = "application/json",produces = "application/json")
+    public List<UserModel> ProfileView(@RequestBody UserModel um){
+        return (List<UserModel>) udao.profileView(um.getId());
+    }
+
 }
