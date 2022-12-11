@@ -27,6 +27,13 @@ public class ComplaintController {
     }
 
     @CrossOrigin(origins = "*")
+    @PostMapping(path = "/viewMyComplaint",consumes = "application/json",produces = "application/json")
+    public List<Complaints> viewMy(@RequestBody Complaints c){
+        System.out.println(c.getUserId());
+        return (List<Complaints>) dao.viewMyComplaint(c.getUserId());
+    }
+
+    @CrossOrigin(origins = "*")
     @GetMapping(path = "/viewAllComplaint",consumes = "application/json",produces = "application/json")
     public List<Map<String,String>> viewAll(){
         return (List<Map<String, String>>) dao.complaints();
